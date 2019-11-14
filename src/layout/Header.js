@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,26 +31,28 @@ function Header(props) {
     setSelection(dayNum);
   }
   const handleChange = (dayNum) => {
-    setSelection(dayNum+1);
+    setSelection(dayNum);
   }
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={selection+1} onChange={handleChange}>
+        <Toolbar>
           <Typography edge="start" variant="h6" className={classes.title} color="inherit">
             Cincinnati Weather
           </Typography>
-          {forecast.map((day, i) => (
-            <Tab
-            key={i}
-            label={day[0].dt_txt.substring(0,11)}
-            className={classes.navButton}
-            color="inherit"
-            onClick={handleClick.bind(this, i)}
-            />
-          ))}
-        </Tabs>
+          <Tabs value={selection} onChange={handleChange}>
+            {forecast.map((day, i) => (
+              <Tab
+              key={i}
+              label={day[0].dt_txt.substring(0,11)}
+              className={classes.navButton}
+              color="inherit"
+              onClick={handleClick.bind(this, i)}
+              />
+            ))}
+          </Tabs>
+        </Toolbar>
       </AppBar>
     </div>
   );

@@ -14,7 +14,6 @@ function WeatherApp() {
   })
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_OPEN_WEATHER_API_KEY);
     axios.get("http://api.openweathermap.org/data/2.5/forecast?id=4508722&units=imperial&APPID="+process.env.REACT_APP_OPEN_WEATHER_API_KEY)
     .then(response => {
       let list = response.data.list;
@@ -35,7 +34,6 @@ function WeatherApp() {
       const days = arr.filter(day => day.length > 0);
       
       setForecast(days);
-      console.log(days);
     })
     .catch(err => {
       console.log(err);

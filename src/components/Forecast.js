@@ -68,7 +68,7 @@ function PanelContent(props) {
 
 export default function Forecast(props) {
   const {forecast} = props;
-  const [selection, setSelection] = useGlobal('selection');
+  const [selection] = useGlobal('selection');
   const [day, setDay] = useState([]);
 
   const classes = useStyles();
