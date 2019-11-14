@@ -8,15 +8,19 @@ import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
+  toolbar: {
+
   },
-  navButton: {
-    margin: 'auto'
+  tabs: {
+    // display: 'flex',
+  },
+  tab: {
+    // flexGrow: 1,
+    // flexDirection: 'reverse'
   },
   title: {
-    margin: 'auto',
-    marginLeft: '1em'
+
+    
   },
 }));
 
@@ -35,26 +39,24 @@ function Header(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography edge="start" variant="h6" className={classes.title} color="inherit">
-            Cincinnati Weather
-          </Typography>
-          <Tabs value={selection} onChange={handleChange}>
-            {forecast.map((day, i) => (
-              <Tab
-              key={i}
-              label={day[0].dt_txt.substring(0,11)}
-              className={classes.navButton}
-              color="inherit"
-              onClick={handleClick.bind(this, i)}
-              />
-            ))}
-          </Tabs>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="static">
+      <Toolbar className={classes.toolbar}>
+        <Typography edge="start" variant="h6" className={classes.title} color="inherit">
+          Cincinnati Weather
+        </Typography>
+        <Tabs value={selection} onChange={handleChange} className={classes.tabs}>
+          {forecast.map((day, i) => (
+            <Tab
+            key={i}
+            label={day[0].dt_txt.substring(0,11)}
+            className={classes.tab}
+            color="inherit"
+            onClick={handleClick.bind(this, i)}
+            />
+          ))}
+        </Tabs>
+      </Toolbar>
+    </AppBar>
   );
 }
 

@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import CardContent from '@material-ui/core/CardContent';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     bottom: 0,
+    width: '100%',
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -45,23 +47,75 @@ const useStyles = makeStyles(theme => ({
   },
   panel: {
     marginTop: '3.5em',
-    marginLeft: '2em'
+    width: '100%'
+    // marginLeft: '2em'
+  },
+  iconContainer: {
+    backgroundColor: theme.palette.secondary.light,
+    width: "10em",
+    borderRadius: '50%',
+    margin: 'auto',
+    marginBottom: '2em',
+  },
+  card: {
+    alignItems: 'center'
+  },
+  infoContainer: {
+    display: 'flex',
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    marginTop: '5em',
+  },
+  infoItem: {
+    flexGrow: 1,
   }
 }));
 
 function PanelContent(props) {
+  const classes = useStyles();
   const {entry} = props;
+  const iconUrl = "http://openweathermap.org/img/wn/"+entry.weather[0].icon+"@2x.png"
 
   return (
     <div>
-      <h1>{entry.weather[0].description.toUpperCase()}</h1>
+      <CardContent className={classes.card}>
+        <div className={classes.iconContainer}>
+          <img src={iconUrl} alt=""/>
+        </div>
+        <Typography gutterBottom variant="h4" component="h2">
+          {entry.weather[0].description.toUpperCase()}
+        </Typography>
 
-      <h2>Temperature</h2>
-      <p>{entry.main.temp}&#176;F</p>
-      <h2>Cloud Cover</h2>
-      <p>{entry.clouds.all}%</p>
-      <h2>Wind</h2>
-      <p>{entry.wind.speed}mph at {entry.wind.deg}&#176;</p>
+        <div className={classes.infoContainer}>
+          <div className={classes.infoItem}>
+            <Typography gutterBottom variant="h5" component="h3">
+              {entry.main.temp}&#176;F
+            </Typography>
+            <Typography gutterBottom variant="h6" component="h3">
+              Temperature
+            </Typography>
+          </div>
+
+          <div className={classes.infoItem}>
+            <Typography gutterBottom variant="h5" component="h3">
+              {entry.clouds.all}%
+            </Typography>
+            <Typography gutterBottom variant="h6" component="h3">
+              Cloud Cover
+            </Typography>
+          </div>
+
+          <div className={classes.infoItem}>
+            <Typography gutterBottom variant="h5" component="h3">
+              {entry.wind.speed}mph at {entry.wind.deg}&#176;
+            </Typography>
+            <Typography gutterBottom variant="h6" component="h3">
+              Wind
+            </Typography>
+          </div>
+        </div>
+
+      </CardContent>
     </div>
   );
 }

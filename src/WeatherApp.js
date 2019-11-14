@@ -33,6 +33,7 @@ function WeatherApp() {
 
       const days = arr.filter(day => day.length > 0);
       
+      console.log(days);
       setForecast(days);
     })
     .catch(err => {
