@@ -48,10 +48,9 @@ const useStyles = makeStyles(theme => ({
   panel: {
     marginTop: '3.5em',
     width: '100%'
-    // marginLeft: '2em'
   },
   iconContainer: {
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: '#637bfe',
     width: "10em",
     borderRadius: '50%',
     margin: 'auto',
@@ -68,6 +67,9 @@ const useStyles = makeStyles(theme => ({
   },
   infoItem: {
     flexGrow: 1,
+  },
+  description: {
+    color: '#637bfe'
   }
 }));
 
@@ -82,7 +84,7 @@ function PanelContent(props) {
         <div className={classes.iconContainer}>
           <img src={iconUrl} alt=""/>
         </div>
-        <Typography gutterBottom variant="h4" component="h2">
+        <Typography gutterBottom variant="h4" component="h2" className={classes.description}>
           {entry.weather[0].description.toUpperCase()}
         </Typography>
 

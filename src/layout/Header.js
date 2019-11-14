@@ -12,16 +12,17 @@ const useStyles = makeStyles(theme => ({
 
   },
   tabs: {
-    // display: 'flex',
+
   },
   tab: {
-    // flexGrow: 1,
-    // flexDirection: 'reverse'
+
   },
   title: {
 
-    
   },
+  appBar: {
+    backgroundColor: '#2196f3'
+  }
 }));
 
 function Header(props) {
@@ -39,7 +40,7 @@ function Header(props) {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <Typography edge="start" variant="h6" className={classes.title} color="inherit">
           Cincinnati Weather
