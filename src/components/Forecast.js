@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import CardContent from "@material-ui/core/CardContent";
+import Divider from '@material-ui/core/Divider';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,13 +50,13 @@ const useStyles = makeStyles(theme => ({
     marginTop: "3.5em",
     width: "100%"
   },
-  iconContainer: {
-    backgroundColor: "#637bfe",
-    width: "8em",
-    borderRadius: "50%",
-    margin: "auto",
-    marginBottom: "2em"
-  },
+  // iconContainer: {
+  //   backgroundColor: "#637bfe",
+  //   width: "8em",
+  //   borderRadius: "50%",
+  //   margin: "auto",
+  //   marginBottom: "2em"
+  // },
   // iconContainer: {
   //   backgroundColor: '#637bfe',
   //   width: "8em",
@@ -63,6 +64,19 @@ const useStyles = makeStyles(theme => ({
   //   margin: 'auto',
   //   marginBottom: '2em',
   // },
+  summaryContainer: {
+    display: 'flex',
+    marginLeft: '40%',
+    marginRight: '40%',
+    marginBottom: '3em',
+  },
+  weatherContainer: {
+    
+  },
+  iconContainer: {
+      width: "8em",
+      margin: "auto",
+    },
   card: {
     alignItems: "center"
   },
@@ -89,17 +103,26 @@ function PanelContent(props) {
   return (
     <div>
       <CardContent className={classes.card}>
-        <div className={classes.iconContainer}>
-          <img src={iconUrl} alt="" />
+        <div className={classes.summaryContainer}>
+          <div className={classes.weatherContainer}>
+            <Typography gutterBottom variant="h2" component="h2">
+              {entry.main.temp}&#176;F
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="h2"
+              className={classes.description}
+            >
+              {entry.weather[0].description.toUpperCase()}
+            </Typography>
+          </div>
+          <div className={classes.iconContainer}>
+            <img src={iconUrl} alt="" />
+          </div>
         </div>
-        <Typography
-          gutterBottom
-          variant="h4"
-          component="h2"
-          className={classes.description}
-        >
-          {entry.weather[0].description.toUpperCase()}
-        </Typography>
+
+        <Divider variant="inset"/>
 
         <div className={classes.infoContainer}>
           <div className={classes.infoItem}>
@@ -149,11 +172,8 @@ export default function Forecast(props) {
   const getPrettyTime = dateStr => {
     let hour = new Date(dateStr).getHours();
     let suffix = " AM";
-    if (hour > 11) 
-      suffix = " PM";
-    
-    if (hour > 12) 
-      hour -= 12;
+    if (hour > 11) suffix = " PM";
+    if (hour > 12) hour -= 12;
     return hour + suffix;
   };
 
