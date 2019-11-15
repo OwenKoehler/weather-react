@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useGlobal } from 'reactn';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import CardContent from '@material-ui/core/CardContent';
+import { useGlobal } from "reactn";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import CardContent from "@material-ui/core/CardContent";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -28,33 +28,33 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    position: 'absolute',
+    display: "flex",
+    position: "absolute",
     top: 0,
     bottom: 0,
-    width: '100%',
+    width: "100%"
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    marginTop: '6em',
+    marginTop: "6em"
   },
   panel: {
-    marginTop: '3.5em',
-    width: '100%'
+    marginTop: "3.5em",
+    width: "100%"
   },
   iconContainer: {
-    backgroundColor: '#637bfe',
+    backgroundColor: "#637bfe",
     width: "8em",
-    borderRadius: '50%',
-    margin: 'auto',
-    marginBottom: '2em',
+    borderRadius: "50%",
+    margin: "auto",
+    marginBottom: "2em"
   },
   // iconContainer: {
   //   backgroundColor: '#637bfe',
@@ -64,34 +64,40 @@ const useStyles = makeStyles(theme => ({
   //   marginBottom: '2em',
   // },
   card: {
-    alignItems: 'center'
+    alignItems: "center"
   },
   infoContainer: {
-    display: 'flex',
+    display: "flex",
     flexDirection: "row",
-    flexWrap: 'wrap',
-    marginTop: '5em',
+    flexWrap: "wrap",
+    marginTop: "5em"
   },
   infoItem: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   description: {
-    color: '#637bfe'
+    color: "#637bfe"
   }
 }));
 
 function PanelContent(props) {
   const classes = useStyles();
-  const {entry} = props;
-  const iconUrl = "http://openweathermap.org/img/wn/"+entry.weather[0].icon+"@2x.png"
+  const { entry } = props;
+  const iconUrl =
+    "http://openweathermap.org/img/wn/" + entry.weather[0].icon + "@2x.png";
 
   return (
     <div>
       <CardContent className={classes.card}>
         <div className={classes.iconContainer}>
-          <img src={iconUrl} alt=""/>
+          <img src={iconUrl} alt="" />
         </div>
-        <Typography gutterBottom variant="h4" component="h2" className={classes.description}>
+        <Typography
+          gutterBottom
+          variant="h4"
+          component="h2"
+          className={classes.description}
+        >
           {entry.weather[0].description.toUpperCase()}
         </Typography>
 
@@ -123,23 +129,33 @@ function PanelContent(props) {
             </Typography>
           </div>
         </div>
-
       </CardContent>
     </div>
   );
 }
 
 export default function Forecast(props) {
-  const {forecast} = props;
-  const [daySelection] = useGlobal('daySelection');
-  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
+  const { forecast } = props;
+  const [daySelection] = useGlobal("daySelection");
+  const [hourSelection, setHourSelection] = useGlobal("hourSelection");
   const [day, setDay] = useState([]);
 
   const classes = useStyles();
 
   useEffect(() => {
-    setDay(forecast[daySelection])
-  }, [forecast, daySelection, day])
+    setDay(forecast[daySelection]);
+  }, [forecast, daySelection, day]);
+
+  const getPrettyTime = dateStr => {
+    let hour = new Date(dateStr).getHours();
+    let suffix = " AM";
+    if (hour > 11) 
+      suffix = " PM";
+    
+    if (hour > 12) 
+      hour -= 12;
+    return hour + suffix;
+  };
 
   const handleChange = (event, newHourSelection) => {
     setHourSelection(newHourSelection);
@@ -154,18 +170,23 @@ export default function Forecast(props) {
         onChange={handleChange}
         className={classes.tabs}
       >
-      {day && day.map((entry, i) => (
-        <Tab label={entry.dt_txt.substring(11)} key={i}/>
-      ))}
+        {day &&
+          day.map((entry, i) => (
+            <Tab label={getPrettyTime(entry.dt_txt)} key={i} />
+          ))}
       </Tabs>
 
-      {day && day.map((entry, i) => (
-        <TabPanel value={hourSelection} className={classes.panel} key={i} index={i}>
-          <PanelContent entry={entry}/>
-        </TabPanel>
-      ))}
-        
+      {day &&
+        day.map((entry, i) => (
+          <TabPanel
+            value={hourSelection}
+            className={classes.panel}
+            key={i}
+            index={i}
+          >
+            <PanelContent entry={entry} />
+          </TabPanel>
+        ))}
     </div>
   );
 }
-

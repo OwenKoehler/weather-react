@@ -31,6 +31,13 @@ function Header(props) {
   const {forecast} = props;
   const [daySelection, setDaySelection] = useGlobal('daySelection');
   const [hourSelection, setHourSelection] = useGlobal('hourSelection');
+
+  const getPrettyDate = (dateStr) => {
+    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    let date = new Date(dateStr);
+    return week[date.getDay()]+" "+date.getMonth()+"/"+date.getDate();
+  }
   
 
   const handleClick = (dayNum) => {
@@ -50,7 +57,7 @@ function Header(props) {
           {forecast.map((day, i) => (
             <Tab
             key={i}
-            label={day[0].dt_txt.substring(0,11)}
+            label={getPrettyDate(day[0].dt_txt)}
             className={classes.tab}
             color="inherit"
             onClick={handleClick.bind(this, i)}
