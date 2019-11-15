@@ -9,6 +9,8 @@ import Box from "@material-ui/core/Box";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from '@material-ui/core/Divider';
 
+import '../resources/css/weather-icons.min.css';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   const classes = useStyles();
@@ -50,33 +52,20 @@ const useStyles = makeStyles(theme => ({
     marginTop: "3.5em",
     width: "100%"
   },
-  // iconContainer: {
-  //   backgroundColor: "#637bfe",
-  //   width: "8em",
-  //   borderRadius: "50%",
-  //   margin: "auto",
-  //   marginBottom: "2em"
-  // },
-  // iconContainer: {
-  //   backgroundColor: '#637bfe',
-  //   width: "8em",
-  //   borderRadius: '3%',
-  //   margin: 'auto',
-  //   marginBottom: '2em',
-  // },
   summaryContainer: {
     display: 'flex',
-    marginLeft: '40%',
-    marginRight: '40%',
+    marginLeft: '35%',
+    marginRight: '35%',
     marginBottom: '3em',
   },
   weatherContainer: {
     
   },
   iconContainer: {
-      width: "8em",
-      margin: "auto",
-    },
+    width: "8em",
+    margin: "auto",
+    marginLeft: "1em",
+  },
   card: {
     alignItems: "center"
   },
@@ -84,21 +73,37 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: "5em"
+    marginTop: "8%",
   },
   infoItem: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   description: {
-    color: "#637bfe"
+    color: "#2a3eb1"
   }
 }));
 
 function PanelContent(props) {
   const classes = useStyles();
   const { entry } = props;
-  const iconUrl =
-    "http://openweathermap.org/img/wn/" + entry.weather[0].icon + "@2x.png";
+  const weatherIcons = require('../resources/icons.json'); //with path
+  const iconColor = "#637bfe"
+
+  // From https://gist.github.com/tbranyen/62d974681dea8ee0caa1
+  const getIcon = () => {
+    var prefix = 'wi wi-';
+    var code = entry.weather[0].id;
+    var icon = weatherIcons[code].icon;
+
+    // If we are not in the ranges mentioned above, add a day/night prefix.
+    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
+      icon = 'day-' + icon;
+    }
+
+    // Finally tack on the prefix.
+    icon = prefix + icon;
+    return icon;
+  }
 
   return (
     <div>
@@ -118,7 +123,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <img src={iconUrl} alt="" />
+            <i className={getIcon()} style={{fontSize: 6.5+"em", color: iconColor}}></i>
           </div>
         </div>
 

@@ -33,7 +33,7 @@ function Header(props) {
   const [hourSelection, setHourSelection] = useGlobal('hourSelection');
 
   const getPrettyDate = (dateStr) => {
-    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
     let date = new Date(dateStr);
     return week[date.getDay()]+" "+date.getMonth()+"/"+date.getDate();
