@@ -29,14 +29,15 @@ function Header(props) {
   const classes = useStyles();
 
   const {forecast} = props;
-  const [selection, setSelection] = useGlobal('selection');
+  const [daySelection, setDaySelection] = useGlobal('daySelection');
+  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
   
 
   const handleClick = (dayNum) => {
-    setSelection(dayNum);
-  }
-  const handleChange = (dayNum) => {
-    setSelection(dayNum);
+    setDaySelection(dayNum);
+    if(forecast[dayNum].length < hourSelection+1){
+      setHourSelection(forecast[dayNum].length-1);
+    }
   }
 
   return (
@@ -45,7 +46,7 @@ function Header(props) {
         <Typography edge="start" variant="h6" className={classes.title} color="inherit">
           Cincinnati Weather
         </Typography>
-        <Tabs value={selection} onChange={handleChange} className={classes.tabs}>
+        <Tabs value={daySelection} className={classes.tabs}>
           {forecast.map((day, i) => (
             <Tab
             key={i}

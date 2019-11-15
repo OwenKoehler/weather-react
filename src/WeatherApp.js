@@ -9,8 +9,11 @@ import './App.css';
 function WeatherApp() {
 
   const [forecast, setForecast] = useState([]);
+  
+  
   setGlobal({
-    selection: 0
+    daySelection: 0,
+    hourSelection: 0
   })
 
   useEffect(() => {

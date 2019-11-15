@@ -51,11 +51,18 @@ const useStyles = makeStyles(theme => ({
   },
   iconContainer: {
     backgroundColor: '#637bfe',
-    width: "10em",
+    width: "8em",
     borderRadius: '50%',
     margin: 'auto',
     marginBottom: '2em',
   },
+  // iconContainer: {
+  //   backgroundColor: '#637bfe',
+  //   width: "8em",
+  //   borderRadius: '3%',
+  //   margin: 'auto',
+  //   marginBottom: '2em',
+  // },
   card: {
     alignItems: 'center'
   },
@@ -124,18 +131,18 @@ function PanelContent(props) {
 
 export default function Forecast(props) {
   const {forecast} = props;
-  const [selection] = useGlobal('selection');
+  const [daySelection] = useGlobal('daySelection');
+  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
   const [day, setDay] = useState([]);
 
   const classes = useStyles();
-  const [value, setValue] = useState(0);
 
   useEffect(() => {
-    setDay(forecast[selection])
-  }, [forecast, selection, day])
+    setDay(forecast[daySelection])
+  }, [forecast, daySelection, day])
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChange = (event, newHourSelection) => {
+    setHourSelection(newHourSelection);
   };
 
   return (
@@ -143,7 +150,7 @@ export default function Forecast(props) {
       <Tabs
         orientation="vertical"
         variant="scrollable"
-        value={value}
+        value={hourSelection}
         onChange={handleChange}
         className={classes.tabs}
       >
@@ -153,11 +160,11 @@ export default function Forecast(props) {
       </Tabs>
 
       {day && day.map((entry, i) => (
-        <TabPanel value={value} className={classes.panel} key={i} index={i}>
+        <TabPanel value={hourSelection} className={classes.panel} key={i} index={i}>
           <PanelContent entry={entry}/>
         </TabPanel>
       ))}
-
+        
     </div>
   );
 }
