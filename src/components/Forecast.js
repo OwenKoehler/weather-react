@@ -54,8 +54,8 @@ const useStyles = makeStyles(theme => ({
   },
   summaryContainer: {
     display: 'flex',
-    marginLeft: '35%',
-    marginRight: '35%',
+    marginLeft: '25%',
+    marginRight: '40%',
     marginBottom: '3em',
   },
   weatherContainer: {
@@ -64,10 +64,10 @@ const useStyles = makeStyles(theme => ({
   iconContainer: {
     width: "8em",
     margin: "auto",
-    marginLeft: "1em",
+    marginLeft: "2em",
   },
   card: {
-    alignItems: "center"
+    
   },
   infoContainer: {
     display: "flex",
@@ -110,12 +110,12 @@ function PanelContent(props) {
       <CardContent className={classes.card}>
         <div className={classes.summaryContainer}>
           <div className={classes.weatherContainer}>
-            <Typography gutterBottom variant="h2" component="h2">
-              {entry.main.temp}&#176;F
+            <Typography gutterBottom variant="h1" component="h2">
+              {Math.ceil(entry.main.temp)}&#176;F
             </Typography>
             <Typography
               gutterBottom
-              variant="h4"
+              variant="h3"
               component="h2"
               className={classes.description}
             >
@@ -123,7 +123,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <i className={getIcon()} style={{fontSize: 6.5+"em", color: iconColor}}></i>
+            <i className={getIcon()} style={{fontSize: 10+"em", color: iconColor}}></i>
           </div>
         </div>
 
@@ -132,10 +132,10 @@ function PanelContent(props) {
         <div className={classes.infoContainer}>
           <div className={classes.infoItem}>
             <Typography gutterBottom variant="h5" component="h3">
-              {entry.main.temp}&#176;F
+              {entry.main.humidity}%
             </Typography>
             <Typography gutterBottom variant="h6" component="h3">
-              Temperature
+              Humidity
             </Typography>
           </div>
 
