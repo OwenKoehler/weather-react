@@ -1,53 +1,55 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { setGlobal } from 'reactn';
-import axios from "axios";
+import axios from 'axios';
 
-import Forecast from "./components/Forecast";
-import Header from "./layout/Header";
+import Forecast from './components/Forecast';
+import Header from './layout/Header';
 import './App.css';
 
 function WeatherApp() {
-
   const [forecast, setForecast] = useState([]);
-  
-  
+
   setGlobal({
     daySelection: 0,
     hourSelection: 0
-  })
+  });
 
   useEffect(() => {
-    axios.get("http://api.openweathermap.org/data/2.5/forecast?id=4508722&units=imperial&APPID="+process.env.REACT_APP_OPEN_WEATHER_API_KEY)
-    .then(response => {
-      let list = response.data.list;
-      let arr = [[]];
-      let arrIndex = 0;
-      let lastDate = list[0].dt_txt.substring(0,11);
+    axios
+      .get(
+        'http://api.openweathermap.org/data/2.5/forecast?id=4508722&units=imperial&APPID=' +
+          process.env.REACT_APP_OPEN_WEATHER_API_KEY
+      )
+      .then(response => {
+        let list = response.data.list;
+        let arr = [[]];
+        let arrIndex = 0;
+        let lastDate = list[0].dt_txt.substring(0, 11);
 
-      list.forEach(entry => {
-        if(!(lastDate === entry.dt_txt.substring(0,11))){
-          arr.push([]);
-          arrIndex++;
-        } else {
-          arr[arrIndex].push(entry);
-        }
-        lastDate=entry.dt_txt.substring(0,11);
+        list.forEach(entry => {
+          if (!(lastDate === entry.dt_txt.substring(0, 11))) {
+            arr.push([]);
+            arrIndex++;
+          } else {
+            arr[arrIndex].push(entry);
+          }
+          lastDate = entry.dt_txt.substring(0, 11);
+        });
+
+        const days = arr.filter(day => day.length > 0);
+
+        console.log(days);
+        setForecast(days);
       })
-
-      const days = arr.filter(day => day.length > 0);
-      
-      console.log(days);
-      setForecast(days);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }, [])
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <div className="App">
-      <Header forecast={forecast}/>
-      <Forecast forecast={forecast}/>
+    <div className='App'>
+      <Header forecast={forecast} />
+      <Forecast forecast={forecast} />
     </div>
   );
 }
