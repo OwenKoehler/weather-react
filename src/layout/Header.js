@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { useGlobal } from 'reactn';
 import AppBar from '@material-ui/core/AppBar';
 import { Typography } from '@material-ui/core';
@@ -8,18 +8,10 @@ import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles(theme => ({
-  toolbar: {
-
-  },
-  tabs: {
-
-  },
-  tab: {
-
-  },
-  title: {
-
-  },
+  toolbar: {},
+  tabs: {},
+  tab: {},
+  title: {},
   appBar: {
     backgroundColor: '#2196f3'
   }
@@ -28,39 +20,43 @@ const useStyles = makeStyles(theme => ({
 function Header(props) {
   const classes = useStyles();
 
-  const {forecast} = props;
+  const { forecast } = props;
   const [daySelection, setDaySelection] = useGlobal('daySelection');
   const [hourSelection, setHourSelection] = useGlobal('hourSelection');
 
-  const getPrettyDate = (dateStr) => {
-    const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const getPrettyDate = dateStr => {
+    const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
     let date = new Date(dateStr);
-    return week[date.getDay()]+" "+date.getMonth()+"/"+date.getDate();
-  }
-  
+    return week[date.getDay()] + ' ' + date.getMonth() + '/' + date.getDate();
+  };
 
-  const handleClick = (dayNum) => {
+  const handleClick = dayNum => {
     setDaySelection(dayNum);
-    if(forecast[dayNum].length < hourSelection+1){
-      setHourSelection(forecast[dayNum].length-1);
+    if (forecast[dayNum].length < hourSelection + 1) {
+      setHourSelection(forecast[dayNum].length - 1);
     }
-  }
+  };
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar position='static' className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        <Typography edge="start" variant="h6" className={classes.title} color="inherit">
+        <Typography
+          edge='start'
+          variant='h6'
+          className={classes.title}
+          color='inherit'
+        >
           Cincinnati Weather
         </Typography>
         <Tabs value={daySelection} className={classes.tabs}>
           {forecast.map((day, i) => (
             <Tab
-            key={i}
-            label={getPrettyDate(day[0].dt_txt)}
-            className={classes.tab}
-            color="inherit"
-            onClick={handleClick.bind(this, i)}
+              key={i}
+              label={getPrettyDate(day[0].dt_txt)}
+              className={classes.tab}
+              color='inherit'
+              onClick={handleClick.bind(this, i)}
             />
           ))}
         </Tabs>

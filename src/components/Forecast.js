@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useGlobal } from "reactn";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import CardContent from "@material-ui/core/CardContent";
-import Divider from "@material-ui/core/Divider";
+import React, { useState, useEffect } from 'react';
+import { useGlobal } from 'reactn';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import "../resources/css/weather-icons.min.css";
-import "../resources/city.list.json";
+import '../resources/css/weather-icons.min.css';
+import '../resources/city.list.json';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -20,8 +20,8 @@ function TabPanel(props) {
 
   return (
     <Typography
-      component="div"
-      role="tabpanel"
+      component='div'
+      role='tabpanel'
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       {...other}
@@ -41,62 +41,62 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    display: "flex",
-    position: "absolute",
+    display: 'flex',
+    position: 'absolute',
     top: 0,
     bottom: 0,
-    width: "100%"
+    width: '100%'
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    marginTop: "6em"
+    marginTop: '6em'
   },
   panel: {
-    marginTop: "3.5em",
-    width: "100%"
+    marginTop: '3.5em',
+    width: '100%'
   },
   summaryContainer: {
-    display: "flex",
-    marginLeft: "25%",
-    marginRight: "40%",
-    marginBottom: "3em"
+    display: 'flex',
+    marginLeft: '25%',
+    marginRight: '40%',
+    marginBottom: '3em'
   },
   weatherContainer: {},
   iconContainer: {
-    width: "8em",
-    margin: "auto",
-    marginLeft: "2em"
+    width: '8em',
+    margin: 'auto',
+    marginLeft: '2em'
   },
   card: {},
   infoContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: "8%"
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: '8%'
   },
   infoItem: {
     flexGrow: 1
   },
   description: {
-    color: "#2a3eb1"
+    color: '#2a3eb1'
   },
   citySelect: {
-    textAlign: "left",
-    marginLeft: "8%"
+    textAlign: 'left',
+    marginLeft: '8%'
   },
   select: {
-    width: "10em"
+    width: '10em'
   }
 }));
 
 function CitySelect(props) {
   const classes = useStyles();
-  const cities = require("../resources/city.list.json");
+  const cities = require('../resources/city.list.json');
   const [filteredCities, setFilteredCities] = useState([]);
 
   const citiesProps = {
     options: cities,
-    getOptionLabel: city => city.name,
+    getOptionLabel: city => city.name
   };
 
   // source: https://dev.to/iam_timsmith/lets-build-a-search-bar-in-react-120j
@@ -107,7 +107,7 @@ function CitySelect(props) {
     let newList = [];
 
     // If the search bar isn't empty
-    if (e.target.value !== "" && e.target.value.length >= 4) {
+    if (e.target.value !== '' && e.target.value.length >= 4) {
       // Assign the original list to currentList
       currentList = cities;
 
@@ -135,9 +135,9 @@ function CitySelect(props) {
     <div className={classes.citySelect}>
       <Autocomplete
         {...citiesProps}
-        id="controlled-demo"
+        id='controlled-demo'
         renderInput={params => (
-          <TextField {...params} label="controlled" margin="normal" fullWidth />
+          <TextField {...params} label='controlled' margin='normal' fullWidth />
         )}
       />
     </div>
@@ -147,18 +147,18 @@ function CitySelect(props) {
 function PanelContent(props) {
   const classes = useStyles();
   const { entry } = props;
-  const weatherIcons = require("../resources/icons.json"); //with path
-  const iconColor = "#637bfe";
+  const weatherIcons = require('../resources/icons.json'); //with path
+  const iconColor = '#637bfe';
 
   // From https://gist.github.com/tbranyen/62d974681dea8ee0caa1
   const getIcon = () => {
-    var prefix = "wi wi-";
+    var prefix = 'wi wi-';
     var code = entry.weather[0].id;
     var icon = weatherIcons[code].icon;
 
     // If we are not in the ranges mentioned above, add a day/night prefix.
     if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-      icon = "day-" + icon;
+      icon = 'day-' + icon;
     }
 
     // Finally tack on the prefix.
@@ -172,13 +172,13 @@ function PanelContent(props) {
       <CardContent className={classes.card}>
         <div className={classes.summaryContainer}>
           <div className={classes.weatherContainer}>
-            <Typography gutterBottom variant="h1" component="h2">
+            <Typography gutterBottom variant='h1' component='h2'>
               {Math.ceil(entry.main.temp)}&#176;F
             </Typography>
             <Typography
               gutterBottom
-              variant="h3"
-              component="h2"
+              variant='h3'
+              component='h2'
               className={classes.description}
             >
               {entry.weather[0].description.toUpperCase()}
@@ -187,37 +187,37 @@ function PanelContent(props) {
           <div className={classes.iconContainer}>
             <i
               className={getIcon()}
-              style={{ fontSize: 10 + "em", color: iconColor }}
+              style={{ fontSize: 10 + 'em', color: iconColor }}
             ></i>
           </div>
         </div>
 
-        <Divider variant="inset" />
+        <Divider variant='inset' />
 
         <div className={classes.infoContainer}>
           <div className={classes.infoItem}>
-            <Typography gutterBottom variant="h5" component="h3">
+            <Typography gutterBottom variant='h5' component='h3'>
               {entry.main.humidity}%
             </Typography>
-            <Typography gutterBottom variant="h6" component="h3">
+            <Typography gutterBottom variant='h6' component='h3'>
               Humidity
             </Typography>
           </div>
 
           <div className={classes.infoItem}>
-            <Typography gutterBottom variant="h5" component="h3">
+            <Typography gutterBottom variant='h5' component='h3'>
               {entry.clouds.all}%
             </Typography>
-            <Typography gutterBottom variant="h6" component="h3">
+            <Typography gutterBottom variant='h6' component='h3'>
               Cloud Cover
             </Typography>
           </div>
 
           <div className={classes.infoItem}>
-            <Typography gutterBottom variant="h5" component="h3">
+            <Typography gutterBottom variant='h5' component='h3'>
               {entry.wind.speed}mph at {entry.wind.deg}&#176;
             </Typography>
-            <Typography gutterBottom variant="h6" component="h3">
+            <Typography gutterBottom variant='h6' component='h3'>
               Wind
             </Typography>
           </div>
@@ -229,8 +229,8 @@ function PanelContent(props) {
 
 export default function Forecast(props) {
   const { forecast } = props;
-  const [daySelection] = useGlobal("daySelection");
-  const [hourSelection, setHourSelection] = useGlobal("hourSelection");
+  const [daySelection] = useGlobal('daySelection');
+  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
   const [day, setDay] = useState([]);
 
   const classes = useStyles();
@@ -241,8 +241,8 @@ export default function Forecast(props) {
 
   const getPrettyTime = dateStr => {
     let hour = new Date(dateStr).getHours();
-    let suffix = " AM";
-    if (hour > 11) suffix = " PM";
+    let suffix = ' AM';
+    if (hour > 11) suffix = ' PM';
     if (hour > 12) hour -= 12;
     return hour + suffix;
   };
@@ -254,8 +254,8 @@ export default function Forecast(props) {
   return (
     <div className={classes.root}>
       <Tabs
-        orientation="vertical"
-        variant="scrollable"
+        orientation='vertical'
+        variant='scrollable'
         value={hourSelection}
         onChange={handleChange}
         className={classes.tabs}
