@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { setGlobal } from 'reactn';
 import axios from 'axios';
 
 import Forecast from './components/Forecast';
@@ -8,11 +7,6 @@ import './App.css';
 
 function WeatherApp() {
   const [forecast, setForecast] = useState([]);
-
-  setGlobal({
-    daySelection: 0,
-    hourSelection: 0
-  });
 
   useEffect(() => {
     axios

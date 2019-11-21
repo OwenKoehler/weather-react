@@ -4,8 +4,21 @@ import './index.css';
 import WeatherApp from './WeatherApp';
 import * as serviceWorker from './serviceWorker';
 import 'typeface-roboto';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<WeatherApp />, document.getElementById('root'));
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <WeatherApp />
+  </Provider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

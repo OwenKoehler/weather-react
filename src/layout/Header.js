@@ -1,5 +1,7 @@
 import React from 'react';
-import { useGlobal } from 'reactn';
+import { useSelector, useDispatch } from 'react-redux';
+import { hourSelect, daySelect } from '../actions';
+
 import AppBar from '@material-ui/core/AppBar';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,8 +23,10 @@ function Header(props) {
   const classes = useStyles();
 
   const { forecast } = props;
-  const [daySelection, setDaySelection] = useGlobal('daySelection');
-  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
+
+  const daySelection = useSelector(state => state.daySelect);
+  const hourSelection = useSelector(state => state.hourSelect);
+  const dispatch = useDispatch();
 
   const getPrettyDate = dateStr => {
     const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -32,9 +36,9 @@ function Header(props) {
   };
 
   const handleClick = dayNum => {
-    setDaySelection(dayNum);
+    dispatch(daySelect(dayNum));
     if (forecast[dayNum].length < hourSelection + 1) {
-      setHourSelection(forecast[dayNum].length - 1);
+      dispatch(hourSelect(forecast[dayNum].length - 1));
     }
   };
 

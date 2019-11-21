@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobal } from 'reactn';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { hourSelect } from '../actions';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -163,9 +165,11 @@ function PanelContent(props) {
 
 export default function Forecast(props) {
   const { forecast } = props;
-  const [daySelection] = useGlobal('daySelection');
-  const [hourSelection, setHourSelection] = useGlobal('hourSelection');
   const [day, setDay] = useState([]);
+
+  const daySelection = useSelector(state => state.daySelect);
+  const hourSelection = useSelector(state => state.hourSelect);
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
@@ -182,7 +186,7 @@ export default function Forecast(props) {
   };
 
   const handleChange = (event, newHourSelection) => {
-    setHourSelection(newHourSelection);
+    dispatch(hourSelect(newHourSelection));
   };
 
   return (
