@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function IconService(props) {
-  const { code } = props;
+  const { code, size } = props;
   const weatherIcons = require('../resources/icons.json'); //with path
   const iconColor = '#637bfe';
 
@@ -21,7 +21,7 @@ export default function IconService(props) {
   return (
     <i
       className={getIcon(code)}
-      style={{ fontSize: 10 + 'em', color: iconColor }}
+      style={{ fontSize: size + 'em', color: iconColor }}
     ></i>
     
   )

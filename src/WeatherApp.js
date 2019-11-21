@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Forecast from './components/Forecast';
 import Header from './layout/Header';
-import './App.css';
+import './styles.css';
 
 function WeatherApp() {
   const [forecast, setForecast] = useState([]);

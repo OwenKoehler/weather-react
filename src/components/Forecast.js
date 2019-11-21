@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 
 import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
+import '../styles.css';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,6 +50,11 @@ const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     marginTop: '6em'
   },
+  tab: {
+    // flexDirection: 'row-reverse',   *in styles.css to overwrite generated MuiTab-wrapper*
+    // justifyContent: 'space-evenly'   *in styles.css to overwrite generated MuiTab-wrapper*
+  },
+  icon: {},
   panel: {
     marginTop: '3.5em',
     width: '100%'
@@ -102,7 +108,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <WeatherIcon code={entry.weather[0].id}/>
+            <WeatherIcon code={entry.weather[0].id} size={10} />
           </div>
         </div>
 
@@ -176,7 +182,19 @@ export default function Forecast(props) {
       >
         {day &&
           day.map((entry, i) => (
-            <Tab label={getPrettyTime(entry.dt_txt)} key={i} />
+            <Tab
+              label={getPrettyTime(entry.dt_txt)}
+              key={i}
+              className={classes.tab}
+              wrapped={false}
+              icon={
+                <WeatherIcon
+                  code={entry.weather[0].id}
+                  size={1.5}
+                  classname={classes.icon}
+                />
+              }
+            />
           ))}
       </Tabs>
 
