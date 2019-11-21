@@ -1,10 +1,8 @@
-import daySelectReducer from './daySelect';
-import hourSelectReducer from './hourSelect';
+import selectReducer from './select';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-  daySelect: daySelectReducer,
-  hourSelect: hourSelectReducer
+  select: selectReducer,
 });
 
 export default rootReducer;

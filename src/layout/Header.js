@@ -24,8 +24,8 @@ function Header(props) {
 
   const { forecast } = props;
 
-  const daySelection = useSelector(state => state.daySelect);
-  const hourSelection = useSelector(state => state.hourSelect);
+  const daySelection = useSelector(state => state.select.daySelect);
+  const hourSelection = useSelector(state => state.select.hourSelect);
   const dispatch = useDispatch();
 
   const getPrettyDate = dateStr => {

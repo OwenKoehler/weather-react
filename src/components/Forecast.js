@@ -167,8 +167,8 @@ export default function Forecast(props) {
   const { forecast } = props;
   const [day, setDay] = useState([]);
 
-  const daySelection = useSelector(state => state.daySelect);
-  const hourSelection = useSelector(state => state.hourSelect);
+  const daySelection = useSelector(state => state.select.daySelect);
+  const hourSelection = useSelector(state => state.select.hourSelect);
   const dispatch = useDispatch();
 
   const classes = useStyles();
