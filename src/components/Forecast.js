@@ -108,7 +108,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <WeatherIcon code={entry.weather[0].id} size={10} />
+            <WeatherIcon code={entry.weather[0].id} size={10} hour={(new Date(entry.dt_txt)).getHours()}/>
           </div>
         </div>
 
@@ -191,6 +191,7 @@ export default function Forecast(props) {
                 <WeatherIcon
                   code={entry.weather[0].id}
                   size={1.5}
+                  hour={(new Date(entry.dt_txt)).getHours()}
                   classname={classes.icon}
                 />
               }
