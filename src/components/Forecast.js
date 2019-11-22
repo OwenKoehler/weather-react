@@ -11,7 +11,9 @@ import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 
+import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
+import '../styles.css';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,6 +52,11 @@ const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     marginTop: '6em'
   },
+  tab: {
+    // flexDirection: 'row-reverse',   *in styles.css to overwrite generated MuiTab-wrapper*
+    // justifyContent: 'space-evenly'   *in styles.css to overwrite generated MuiTab-wrapper*
+  },
+  icon: {},
   panel: {
     marginTop: '3.5em',
     width: '100%'
@@ -84,24 +91,6 @@ const useStyles = makeStyles(theme => ({
 function PanelContent(props) {
   const classes = useStyles();
   const { entry } = props;
-  const weatherIcons = require('../resources/icons.json'); //with path
-  const iconColor = '#637bfe';
-
-  // From https://gist.github.com/tbranyen/62d974681dea8ee0caa1
-  const getIcon = () => {
-    var prefix = 'wi wi-';
-    var code = entry.weather[0].id;
-    var icon = weatherIcons[code].icon;
-
-    // If we are not in the ranges mentioned above, add a day/night prefix.
-    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-      icon = 'day-' + icon;
-    }
-
-    // Finally tack on the prefix.
-    icon = prefix + icon;
-    return icon;
-  };
 
   return (
     <div>
@@ -121,10 +110,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <i
-              className={getIcon()}
-              style={{ fontSize: 10 + 'em', color: iconColor }}
-            ></i>
+            <WeatherIcon code={entry.weather[0].id} size={10} />
           </div>
         </div>
 
@@ -200,7 +186,19 @@ export default function Forecast(props) {
       >
         {day &&
           day.map((entry, i) => (
-            <Tab label={getPrettyTime(entry.dt_txt)} key={i} />
+            <Tab
+              label={getPrettyTime(entry.dt_txt)}
+              key={i}
+              className={classes.tab}
+              wrapped={false}
+              icon={
+                <WeatherIcon
+                  code={entry.weather[0].id}
+                  size={1.5}
+                  classname={classes.icon}
+                />
+              }
+            />
           ))}
       </Tabs>
 
