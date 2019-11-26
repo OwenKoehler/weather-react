@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Beforehand
+
+This app requires a free API key from [OpenWeather](https://openweathermap.org/api). Obtain a key and
 
 ## Available Scripts
 

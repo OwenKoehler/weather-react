@@ -23,7 +23,6 @@ export default function IconService(props) {
     if(icon === 'wi wi-night-sunny' || icon === 'wi wi-night-alt-sunny'){
       icon = 'wi wi-night-clear'
     }
-    console.log(icon);
     return icon;
   };
 
