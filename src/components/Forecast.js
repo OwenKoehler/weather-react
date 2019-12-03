@@ -43,11 +43,12 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: '100%'
+    width: '100%',
+    marginTop: '4em'
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    marginTop: '6em'
+    marginTop: '1.5em'
   },
   tab: {
     // flexDirection: 'row-reverse',   *in styles.css to overwrite generated MuiTab-wrapper*
@@ -55,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {},
   panel: {
-    marginTop: '3.5em',
+    marginTop: '2em',
     width: '100%'
   },
   summaryContainer: {
