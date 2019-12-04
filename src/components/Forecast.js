@@ -41,16 +41,16 @@ TabPanel.propTypes = {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
     display: 'flex',
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: '100%'
+    width: '100%',
+    marginTop: '4em'
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    marginTop: '6em'
+    marginTop: '1.5em'
   },
   tab: {
     // flexDirection: 'row-reverse',   *in styles.css to overwrite generated MuiTab-wrapper*
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {},
   panel: {
-    marginTop: '3.5em',
+    marginTop: '2em',
     width: '100%'
   },
   summaryContainer: {
@@ -110,7 +110,7 @@ function PanelContent(props) {
             </Typography>
           </div>
           <div className={classes.iconContainer}>
-            <WeatherIcon code={entry.weather[0].id} size={10} />
+            <WeatherIcon code={entry.weather[0].id} size={10} hour={(new Date(entry.dt_txt)).getHours()}/>
           </div>
         </div>
 
@@ -195,6 +195,7 @@ export default function Forecast(props) {
                 <WeatherIcon
                   code={entry.weather[0].id}
                   size={1.5}
+                  hour={(new Date(entry.dt_txt)).getHours()}
                   classname={classes.icon}
                 />
               }
