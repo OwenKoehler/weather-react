@@ -12,7 +12,8 @@ function WeatherApp() {
 
   setGlobal({
     daySelection: 0,
-    hourSelection: 0
+    hourSelection: 0,
+    zipcode: 45150
   });
 
   useEffect(() => {
