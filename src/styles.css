@@ -1,0 +1,8 @@
+.App {
+  text-align: center;
+}
+
+.MuiTab-wrapper {
+  flex-direction: row-reverse !important;
+  justify-content: space-evenly !important;
+}
