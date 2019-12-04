@@ -2,7 +2,7 @@
 
 ## Beforehand
 
-This app requires a free API key from [OpenWeather](https://openweathermap.org/api). Obtain a key and paste it into the [.env](./.env) file.
+This app requires a free API key from [OpenWeather](https://openweathermap.org/api). Obtain a key and paste it into a .env file that you create. An example [.env](./.env.example) file has been provided.
 
 ## Available Scripts
 
