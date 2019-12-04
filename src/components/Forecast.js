@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import Fade from '@material-ui/core/Fade';
 
 import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
@@ -76,10 +77,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '8%'
+    marginTop: '8%',
+    justifyContent: 'space-around'
   },
   infoItem: {
-    flexGrow: 1
+    // borderRadius: '50%',
+    // border: '2px solid grey',
+    // width: '12em',
+    // height: '12em',
   },
   description: {
     color: '#2a3eb1'
@@ -92,57 +97,59 @@ function PanelContent(props) {
 
   return (
     <div>
-      <CardContent className={classes.card}>
-        <div className={classes.summaryContainer}>
-          <div className={classes.weatherContainer}>
-            <Typography gutterBottom variant='h1' component='h2'>
-              {Math.ceil(entry.main.temp)}&#176;F
-            </Typography>
-            <Typography
-              gutterBottom
-              variant='h3'
-              component='h2'
-              className={classes.description}
-            >
-              {entry.weather[0].description.toUpperCase()}
-            </Typography>
-          </div>
-          <div className={classes.iconContainer}>
-            <WeatherIcon code={entry.weather[0].id} size={10} hour={(new Date(entry.dt_txt)).getHours()}/>
-          </div>
-        </div>
-
-        <Divider variant='inset' />
-
-        <div className={classes.infoContainer}>
-          <div className={classes.infoItem}>
-            <Typography gutterBottom variant='h5' component='h3'>
-              {entry.main.humidity}%
-            </Typography>
-            <Typography gutterBottom variant='h6' component='h3'>
-              Humidity
-            </Typography>
+      <Fade in={true}>
+        <CardContent className={classes.card}>
+          <div className={classes.summaryContainer}>
+            <div className={classes.weatherContainer}>
+              <Typography gutterBottom variant='h1' component='h2'>
+                {Math.ceil(entry.main.temp)}&#176;F
+              </Typography>
+              <Typography
+                gutterBottom
+                variant='h3'
+                component='h2'
+                className={classes.description}
+              >
+                {entry.weather[0].description.toUpperCase()}
+              </Typography>
+            </div>
+            <div className={classes.iconContainer}>
+              <WeatherIcon code={entry.weather[0].id} size={10} hour={(new Date(entry.dt_txt)).getHours()}/>
+            </div>
           </div>
 
-          <div className={classes.infoItem}>
-            <Typography gutterBottom variant='h5' component='h3'>
-              {entry.clouds.all}%
-            </Typography>
-            <Typography gutterBottom variant='h6' component='h3'>
-              Cloud Cover
-            </Typography>
-          </div>
+          <Divider variant='inset' />
 
-          <div className={classes.infoItem}>
-            <Typography gutterBottom variant='h5' component='h3'>
-              {entry.wind.speed}mph at {entry.wind.deg}&#176;
-            </Typography>
-            <Typography gutterBottom variant='h6' component='h3'>
-              Wind
-            </Typography>
+          <div className={classes.infoContainer}>
+            <div className={classes.infoItem}>
+              <Typography gutterBottom variant='h5' component='h3'>
+                {entry.main.humidity}%
+              </Typography>
+              <Typography gutterBottom variant='h6' component='h3'>
+                Humidity
+              </Typography>
+            </div>
+
+            <div className={classes.infoItem}>
+              <Typography gutterBottom variant='h5' component='h3'>
+                {entry.clouds.all}%
+              </Typography>
+              <Typography gutterBottom variant='h6' component='h3'>
+                Cloud Cover
+              </Typography>
+            </div>
+
+            <div className={classes.infoItem}>
+              <Typography gutterBottom variant='h5' component='h3'>
+                {entry.wind.speed}mph at {entry.wind.deg}&#176;
+              </Typography>
+              <Typography gutterBottom variant='h6' component='h3'>
+                Wind
+              </Typography>
+            </div>
           </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      </Fade>
     </div>
   );
 }
