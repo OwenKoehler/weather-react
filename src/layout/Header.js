@@ -51,7 +51,7 @@ function Header(props) {
           className={classes.title}
           color='inherit'
         >
-          Cincinnati Weather
+          QuickWeather
         </Typography>
         <Tabs value={daySelection} className={classes.tabs}>
           {forecast.map((day, i) => (
