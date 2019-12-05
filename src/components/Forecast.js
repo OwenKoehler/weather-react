@@ -17,32 +17,8 @@ import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
 import '../styles.css';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  const classes = useStyles();
-
-  return (
-    <Typography
-      component='div'
-      role='tabpanel'
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      {...other}
-    >
-      <Box className={classes.panel}>{children}</Box>
-    </Typography>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-};
-
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
     display: 'flex',
     position: 'absolute',
     top: 0,
@@ -80,8 +56,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'space-around',
     marginTop: '8%',
-    justifyContent: 'space-around'
   },
   infoItem: {
     // borderRadius: '50%',
@@ -188,6 +164,29 @@ function PanelContent(props) {
     </div>
   );
 }
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  const classes = useStyles();
+
+  return (
+    <Typography
+      component='div'
+      role='tabpanel'
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      {...other}
+    >
+      <Box className={classes.panel}>{children}</Box>
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
+};
 
 export default function Forecast(props) {
   const { forecast } = props;
