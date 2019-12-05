@@ -11,3 +11,10 @@ export const hourSelect = selection => {
     payload: selection
   };
 };
+
+export const zipSelect = selection => {
+  return {
+    type: 'ZIP_SELECT',
+    payload: selection
+  };
+};

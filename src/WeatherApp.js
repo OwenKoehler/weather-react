@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import Forecast from './components/Forecast';
 import Header from './layout/Header';
@@ -8,11 +9,17 @@ import './styles.css';
 
 function WeatherApp() {
   const [forecast, setForecast] = useState([]);
+  const zipcode = useSelector(state => state.zipcode.zipcode);
+
+  const isValidUSZip = (zip) => {
+    return /^\d{5}$/.test(zip);
+  }  
 
   useEffect(() => {
-    axios
+    if(isValidUSZip(zipcode)){
+      axios
       .get(
-        'http://api.openweathermap.org/data/2.5/forecast?id=4508722&units=imperial&APPID=' +
+        `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&units=imperial&APPID=` +
           process.env.REACT_APP_OPEN_WEATHER_API_KEY
       )
       .then(response => {
@@ -39,7 +46,8 @@ function WeatherApp() {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [zipcode]);
 
   return (
     <div className='App'>

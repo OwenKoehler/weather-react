@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { hourSelect } from '../actions';
+import { hourSelect, zipSelect } from '../actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
 
 import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
@@ -59,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {},
   panel: {
-    marginTop: '2em',
+    marginTop: '0em',
     width: '100%'
   },
   summaryContainer: {
@@ -90,17 +91,48 @@ const useStyles = makeStyles(theme => ({
   },
   description: {
     color: '#2a3eb1'
-  }
+  },
+  searchContainer: {
+    textAlign: 'left',
+    paddingLeft: '1.5em',
+    marginBottom: '2em'
+  },
+  searchField: {}
 }));
 
 function PanelContent(props) {
   const classes = useStyles();
   const { entry } = props;
 
+  const zipcode = useSelector(state => state.zipcode.zipcode);
+  const dispatch = useDispatch();
+
+  const handleTextChange = event => {
+    event.persist();
+    dispatch(zipSelect(event.target.value));
+  };
+
+  const isValidUSZip = (zip) => {
+    return /^\d{5}$/.test(zip);
+  }  
+
   return (
     <div>
       <Fade in={true}>
         <CardContent className={classes.card}>
+          <div className={classes.searchContainer}>
+            <TextField
+              id='zipcode-search'
+              label='Zipcode'
+              value={zipcode}
+              error={!isValidUSZip(zipcode)}
+              helperText={isValidUSZip(zipcode) ? '' : 'Enter a valid zipcode'}
+              onChange={handleTextChange}
+              className={classes.searchField}
+              margin='normal'
+              variant='outlined'
+            />
+          </div>
           <div className={classes.summaryContainer}>
             <div className={classes.weatherContainer}>
               <Typography gutterBottom variant='h1' component='h2'>
@@ -116,7 +148,11 @@ function PanelContent(props) {
               </Typography>
             </div>
             <div className={classes.iconContainer}>
-              <WeatherIcon code={entry.weather[0].id} size={10} hour={(new Date(entry.dt_txt)).getHours()}/>
+              <WeatherIcon
+                code={entry.weather[0].id}
+                size={10}
+                hour={new Date(entry.dt_txt).getHours()}
+              />
             </div>
           </div>
 
@@ -202,7 +238,7 @@ export default function Forecast(props) {
                 <WeatherIcon
                   code={entry.weather[0].id}
                   size={1.5}
-                  hour={(new Date(entry.dt_txt)).getHours()}
+                  hour={new Date(entry.dt_txt).getHours()}
                   classname={classes.icon}
                 />
               }
