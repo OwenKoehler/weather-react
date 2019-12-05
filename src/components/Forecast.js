@@ -105,16 +105,13 @@ function PanelContent(props) {
   const { entry } = props;
 
   const zipcode = useSelector(state => state.zipcode.zipcode);
+  const zipIsValid = useSelector(state => state.zipcode.valid);
   const dispatch = useDispatch();
 
   const handleTextChange = event => {
     event.persist();
     dispatch(zipSelect(event.target.value));
   };
-
-  const isValidUSZip = (zip) => {
-    return /^\d{5}$/.test(zip);
-  }  
 
   return (
     <div>
@@ -125,8 +122,8 @@ function PanelContent(props) {
               id='zipcode-search'
               label='Zipcode'
               value={zipcode}
-              error={!isValidUSZip(zipcode)}
-              helperText={isValidUSZip(zipcode) ? '' : 'Enter a valid zipcode'}
+              error={!zipIsValid}
+              helperText={zipIsValid ? '' : 'Enter a valid zipcode'}
               onChange={handleTextChange}
               className={classes.searchField}
               margin='normal'

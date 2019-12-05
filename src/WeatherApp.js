@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Forecast from './components/Forecast';
 import Header from './layout/Header';
 
 import './styles.css';
+import { setValidFalse } from './actions';
 
 function WeatherApp() {
   const [forecast, setForecast] = useState([]);
   const zipcode = useSelector(state => state.zipcode.zipcode);
-
-  const isValidUSZip = (zip) => {
-    return /^\d{5}$/.test(zip);
-  }  
+  const zipIsValid = useSelector(state => state.zipcode.valid);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(isValidUSZip(zipcode)){
+    if(zipIsValid){
       axios
       .get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&units=imperial&APPID=` +
@@ -44,10 +43,11 @@ function WeatherApp() {
         setForecast(days);
       })
       .catch(err => {
-        console.log(err);
+        dispatch(setValidFalse());
+        // console.log(err);
       });
     }
-  }, [zipcode]);
+  }, [zipcode, zipIsValid, dispatch]);
 
   return (
     <div className='App'>

@@ -18,3 +18,9 @@ export const zipSelect = selection => {
     payload: selection
   };
 };
+
+export const setValidFalse = () => {
+  return {
+    type: 'SET_VALID_FALSE'
+  };
+};
