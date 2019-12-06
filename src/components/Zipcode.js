@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+
 import { zipSelect } from '../actions';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,16 +41,28 @@ export default function Zipcode() {
   const classes = useStyles();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [favorites, setFavorites] = useState([43220, 45226, 45150]);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(true);
 
   const zipcode = useSelector(state => state.zipcode.zipcode);
   const zipIsValid = useSelector(state => state.zipcode.valid);
   const dispatch = useDispatch();
 
+  const getFavs = useCallback(() => {
+    axios.get('/zips').then(response => {
+      let favs = [];
+      response.data.forEach(fav => {
+        favs.push(fav.zip);
+      });
+      setFavorites(favs);
+    });
+  }, [setFavorites]);
+
+
   useEffect(() => {
+    getFavs();
     setIsFavorite(favorites.includes(zipcode));
-  }, [zipcode, favorites, setIsFavorite])
+  }, []);
 
   const handleTextChange = event => {
     event.persist();
@@ -56,12 +70,24 @@ export default function Zipcode() {
   };
 
   const handleFavClick = () => {
-    if (isFavorite) {
-      setFavorites(favorites.filter(fav => fav !== zipcode));
+    if (favorites.includes(zipcode)) {
+      axios
+        .get(`/delete/${zipcode}`)
+        .then(() => {
+          setFavorites(favorites.filter(fav => fav !== zipcode));
+          setIsFavorite(false);
+        });
     } else {
-      setFavorites(favorites.push(zipcode));
+      axios
+        .post('/add', {
+          zip: zipcode
+        }).then(() => {
+          let arr = favorites.slice();
+          arr.push(zipcode);
+          setFavorites(arr);
+          setIsFavorite(true);
+        });
     }
-    console.log(favorites);
   };
 
   const handleToggle = () => {
@@ -92,11 +118,7 @@ export default function Zipcode() {
 
       <div className={classes.zipsButtonContainer} ref={anchorRef}>
         <IconButton color='secondary' onClick={handleFavClick}>
-          {isFavorite ? (
-            <FavoriteIcon />
-          ) : (
-            <FavoriteBorderIcon />
-          )}
+          {favorites.includes(zipcode) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton color='primary' onClick={handleToggle}>
           <ExpandMoreIcon />
