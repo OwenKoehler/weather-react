@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { hourSelect } from '../actions';
 
@@ -154,12 +153,6 @@ function TabPanel(props) {
     </Typography>
   );
 }
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-};
 
 export default function Forecast(props) {
   const { forecast } = props;

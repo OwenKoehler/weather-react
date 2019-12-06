@@ -118,7 +118,7 @@ export default function Zipcode() {
 
       <div className={classes.zipsButtonContainer} ref={anchorRef}>
         <IconButton color='secondary' onClick={handleFavClick}>
-          {favorites.includes(zipcode) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {favorites.includes(parseInt(zipcode)) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton color='primary' onClick={handleToggle}>
           <ExpandMoreIcon />
