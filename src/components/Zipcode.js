@@ -42,7 +42,6 @@ export default function Zipcode() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(true);
 
   const zipcode = useSelector(state => state.zipcode.zipcode);
   const zipIsValid = useSelector(state => state.zipcode.valid);
@@ -61,8 +60,7 @@ export default function Zipcode() {
 
   useEffect(() => {
     getFavs();
-    setIsFavorite(favorites.includes(zipcode));
-  }, []);
+  }, [getFavs]);
 
   const handleTextChange = event => {
     event.persist();
@@ -75,7 +73,6 @@ export default function Zipcode() {
         .get(`/delete/${zipcode}`)
         .then(() => {
           setFavorites(favorites.filter(fav => fav !== zipcode));
-          setIsFavorite(false);
         });
     } else {
       axios
@@ -85,7 +82,6 @@ export default function Zipcode() {
           let arr = favorites.slice();
           arr.push(zipcode);
           setFavorites(arr);
-          setIsFavorite(true);
         });
     }
   };
@@ -100,6 +96,10 @@ export default function Zipcode() {
     }
     setOpen(false);
   };
+
+  const handleMenuSelect = event => {
+    dispatch(zipSelect(event.target.value));
+  }
 
   return (
     <div className={classes.zipContainer}>
@@ -147,6 +147,8 @@ export default function Zipcode() {
                         disabled={
                           index === favorites.findIndex(fav => zipcode === fav)
                         }
+                        value={favorite}
+                        onClick={handleMenuSelect}
                       >
                         {favorite}
                       </MenuItem>
