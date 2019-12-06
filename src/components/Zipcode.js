@@ -68,7 +68,7 @@ export default function Zipcode() {
   };
 
   const handleFavClick = () => {
-    if (favorites.includes(zipcode)) {
+    if (favorites.includes(parseInt(zipcode)) || favorites.includes(zipcode)) {
       axios
         .get(`/delete/${zipcode}`)
         .then(() => {
@@ -118,7 +118,7 @@ export default function Zipcode() {
 
       <div className={classes.zipsButtonContainer} ref={anchorRef}>
         <IconButton color='secondary' onClick={handleFavClick}>
-          {favorites.includes(parseInt(zipcode)) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {favorites.includes(parseInt(zipcode)) || favorites.includes(zipcode) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton color='primary' onClick={handleToggle}>
           <ExpandMoreIcon />
