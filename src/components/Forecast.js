@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { hourSelect, zipSelect } from '../actions';
+import { hourSelect } from '../actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,11 +11,11 @@ import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
 
 import WeatherIcon from './WeatherIcon';
 import '../resources/css/weather-icons.min.css';
 import '../styles.css';
+import Zipcode from './Zipcode';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    marginTop: '8%',
+    marginTop: '8%'
   },
   infoItem: {
     // borderRadius: '50%',
@@ -67,45 +67,18 @@ const useStyles = makeStyles(theme => ({
   },
   description: {
     color: '#2a3eb1'
-  },
-  searchContainer: {
-    textAlign: 'left',
-    paddingLeft: '1.5em',
-    marginBottom: '2em'
-  },
-  searchField: {}
+  }
 }));
 
 function PanelContent(props) {
   const classes = useStyles();
   const { entry } = props;
 
-  const zipcode = useSelector(state => state.zipcode.zipcode);
-  const zipIsValid = useSelector(state => state.zipcode.valid);
-  const dispatch = useDispatch();
-
-  const handleTextChange = event => {
-    event.persist();
-    dispatch(zipSelect(event.target.value));
-  };
-
   return (
     <div>
       <Fade in={true}>
         <CardContent className={classes.card}>
-          <div className={classes.searchContainer}>
-            <TextField
-              id='zipcode-search'
-              label='Zipcode'
-              value={zipcode}
-              error={!zipIsValid}
-              helperText={zipIsValid ? '' : 'Enter a valid zipcode'}
-              onChange={handleTextChange}
-              className={classes.searchField}
-              margin='normal'
-              variant='outlined'
-            />
-          </div>
+          <Zipcode />
           <div className={classes.summaryContainer}>
             <div className={classes.weatherContainer}>
               <Typography gutterBottom variant='h1' component='h2'>
