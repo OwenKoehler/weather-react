@@ -27,6 +27,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '2em',
     width: '10em'
   },
+  zipInputLabel: {
+    // Necessary to prevent outline from overlapping label
+    backgroundColor: 'white'
+  },
   zipsButtonContainer: {
     marginRight: '1.5em',
     marginTop: '1.5em',
@@ -57,7 +61,6 @@ export default function Zipcode() {
     });
   }, [setFavorites]);
 
-
   useEffect(() => {
     getFavs();
   }, [getFavs]);
@@ -69,16 +72,15 @@ export default function Zipcode() {
 
   const handleFavClick = () => {
     if (favorites.includes(parseInt(zipcode)) || favorites.includes(zipcode)) {
-      axios
-        .get(`/delete/${zipcode}`)
-        .then(() => {
-          setFavorites(favorites.filter(fav => fav !== zipcode));
-        });
+      axios.get(`/delete/${zipcode}`).then(() => {
+        setFavorites(favorites.filter(fav => fav !== zipcode));
+      });
     } else {
       axios
         .post('/add', {
           zip: zipcode
-        }).then(() => {
+        })
+        .then(() => {
           let arr = favorites.slice();
           arr.push(zipcode);
           setFavorites(arr);
@@ -99,12 +101,17 @@ export default function Zipcode() {
 
   const handleMenuSelect = event => {
     dispatch(zipSelect(event.target.value));
-  }
+  };
 
   return (
     <div className={classes.zipContainer}>
       <div className={classes.zipTextContainer}>
         <TextField
+          InputLabelProps={{
+            classes: {
+              root: classes.zipInputLabel
+            }
+          }}
           id='zipcode-search'
           label='Zipcode'
           value={zipcode}
@@ -118,7 +125,12 @@ export default function Zipcode() {
 
       <div className={classes.zipsButtonContainer} ref={anchorRef}>
         <IconButton color='secondary' onClick={handleFavClick}>
-          {favorites.includes(parseInt(zipcode)) || favorites.includes(zipcode) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {favorites.includes(parseInt(zipcode)) ||
+          favorites.includes(zipcode) ? (
+            <FavoriteIcon />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
         <IconButton color='primary' onClick={handleToggle}>
           <ExpandMoreIcon />
